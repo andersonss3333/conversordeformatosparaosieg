@@ -1,0 +1,14 @@
+h3
+{
+  text-align: center;
+}
+
+button
+{
+  text-align: center;
+  background-color: #78a8fa;
+  color: white;
+  hover: green;
+  active: red;
+  border-radius: 0.3rem;
+}
