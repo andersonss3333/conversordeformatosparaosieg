@@ -15,7 +15,7 @@ final class LerArquivosTextoSalvador extends LerArquivosTextoAbstrata
   {
     try
     {
-        parent::processarArquivos();
+        parent::processarArquivo();
       
     } catch (Exception $arquivoNaoAbriException)
     {
