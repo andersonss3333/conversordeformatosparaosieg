@@ -20,18 +20,20 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
 
     if ($this->arquivoAberto)
     {
-      $linha= ''; $cnpjECga= [];
+      $linha= ''; $cnpjECga= []; $cnpj= null; $cga= null;
       
       while(!feof($this->arquivoAberto))
       {
          $linha= fgets($this->arquivoAberto);
          
-         $cnpjECga[]= $this->extrairCNPJOuCGA($linha, 'cnpj');
-         $cnpjECga[]= $this->extrairCNPJOuCGA($linha, 'cga');
+         $cnpj= $this->removerPontosCnpj($this->extrairCNPJOuCGA($linha, 'cnpj'));
+         $cga= $this->limparCga($this->extrairCNPJOuCGA($linha, 'cga'));
+
+         $cnpjECga[]= $cnpj . '|' . $cga;
          
       }
       
-       unset($linha);
+       unset($linha, $cnpj, $cga);
       
        fclose($this->arquivoAberto);
       
@@ -44,23 +46,8 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
     }
   }
 
-  final public function criarPadraoSieg (array $dadosProcessados): array
-  {
-    $dadosFormatados=[];
-    
-    foreach($dadosProcessados as $cnpjCga)
-    {
-      $dadosFormatados[]= $cnpjCga;
-      
-    }
 
-    unset($cnpjCga);
-    
-    return $dadosFormatados;
-    
-  }
-
-  final private function extrairCNPJOuCGA(string $linha, string $dado): mixed
+  final private function extrairCNPJOuCGA(string $linha, string $dado)
    {
      
     switch(strtolower($dado))
@@ -76,17 +63,26 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
 
      unset($dado, $linha);
      
-     return $matches === [] ?  : $matches[0];
+     if($matches !== [])
+     {
+       return $matches[0];
+     }
   }
 
-  final protected function removerPontosCnpj(string $cnpj)
+  final private function removerPontosCnpj(?string $cnpj)
   {
-    return preg_replace('/[\.]+/', ',', $cnpj);
+    if($cnpj !== '1')
+    {
+      return preg_replace('/[\.]+/', ',', $cnpj);
+    }
   }
 
-  final protected function limparCga(string $cga): string
+  final private function limparCga(?string $cga)
   {
-    return preg_replace('/[\.\/-]+/', '', $cga);
+    if($cga !== '1') 
+    {
+      return preg_replace('/[\.\/-]+/', '', $cga);
+    }
   }
   
 }

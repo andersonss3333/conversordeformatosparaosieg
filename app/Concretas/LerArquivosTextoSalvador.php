@@ -28,15 +28,4 @@ final class LerArquivosTextoSalvador extends LerArquivosTextoAbstrata
   {
     return parent::criarPadraoSieg($dadosProcessados);
   }
-
-  final public function removePontosCnpj(string $cnpj): string
-  {
-    return parent::removerPontosCnpj($cnpj);
-  }
-
-  final public function limpaCga(string $cga): string
-  {
-    return parent::limparCga($cga);
-  }
-  
 }
