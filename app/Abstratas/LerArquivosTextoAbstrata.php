@@ -29,7 +29,10 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
          $cnpj= $this->removerPontosCnpj($this->extrairCNPJOuCGA($linha, 'cnpj'));
          $cga= $this->limparCga($this->extrairCNPJOuCGA($linha, 'cga'));
 
-         $cnpjECga[]= $cnpj . '|' . $cga;
+         if($cnpj !== null && $cga !== null)
+         {
+           $cnpjECga[]= $cnpj . '|' . $cga;
+         }
          
       }
       
@@ -71,7 +74,7 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
 
   final private function removerPontosCnpj(?string $cnpj)
   {
-    if($cnpj !== '1')
+    if($cnpj !== null)
     {
       return preg_replace('/[\.]+/', ',', $cnpj);
     }
@@ -79,7 +82,7 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
 
   final private function limparCga(?string $cga)
   {
-    if($cga !== '1') 
+    if($cga !== null) 
     {
       return preg_replace('/[\.\/-]+/', '', $cga);
     }
