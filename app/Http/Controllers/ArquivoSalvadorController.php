@@ -26,15 +26,10 @@ final class ArquivoSalvadorController extends Controller
       
      $arquivoSSA= new LerArquivosTextoSalvador($arquivoTextoSalvador);
      $dadosFiltrados= $arquivoSSA->processarArquivo();
-var_dump($dadosFiltrados); die();
-
-      unset($dadosFiltrados);
       
-     $dadosFormatados= $arquivoSSA->criaPadraoSieg($cnpjECga);
+     $novoArquivoTexto= new CriarArquivoTexto($dadosFiltrados, $arquivoTextoSalvador->getClientOriginalName());
 
-     $novoArquivoTexto= new CriarArquivoTexto($dadosFormatados, $arquivoTextoSalvador->getClientOriginalName());
-
-      unset($dadosFormatados, $arquivoTextoSalvador);
+     unset($arquivoTextoSalvador);
 
      $callback= $novoArquivoTexto->geraClosure();
    
