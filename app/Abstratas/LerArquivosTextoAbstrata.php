@@ -50,23 +50,11 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
     
     foreach($dadosProcessados as $cnpjCga)
     {
-      $quantidadeCaracteres= strlen($cnpjCga);
-
-      switch($quantidadeCaracteres)
-      {
-        case $quantidadeCaracteres === 18:
-        $dadosFormatados[]= preg_replace('/[\.]+/', ',', $cnpjCga);
-        break;
-        
-        case $quantidadeCaracteres === 14:
-        $dadosFormatados[]= preg_replace('/[\.\/-]+/', '', $cnpjCga);
-        break;
-        
-      }
+      $dadosFormatados[]= $cnpjCga;
       
     }
 
-    unset($dadosProcessados, $cnpjCga, $quantidadeCaracteres);
+    unset($cnpjCga);
     
     return $dadosFormatados;
     
@@ -89,6 +77,16 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
      unset($dado, $linha);
      
      return $matches === [] ?  : $matches[0];
+  }
+
+  final protected function removerPontosCnpj(string $cnpj)
+  {
+    return preg_replace('/[\.]+/', ',', $cnpj);
+  }
+
+  final protected function limparCga(string $cga): string
+  {
+    return preg_replace('/[\.\/-]+/', '', $cga);
   }
   
 }
