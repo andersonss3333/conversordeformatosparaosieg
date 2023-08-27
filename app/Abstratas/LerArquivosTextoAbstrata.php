@@ -17,8 +17,8 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
   final public function processarArquivo(): array
   {
     $this->arquivoAberto= fopen($this->arquivoTexto, 'r');
-
-    if ($this->arquivoAberto)
+    
+    if (is_resource($this->arquivoAberto) === true)
     {
       $linha= ''; $cnpjECga= []; $cnpj= null; $cga= null;
       
@@ -50,7 +50,7 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
   }
 
 
-  final private function extrairCNPJOuCGA(string $linha, string $dado)
+  private function extrairCNPJOuCGA(string $linha, string $dado)
    {
      
     switch(strtolower($dado))
@@ -72,7 +72,7 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
      }
   }
 
-  final private function removerPontosCnpj(?string $cnpj)
+  private function removerPontosCnpj(?string $cnpj)
   {
     if($cnpj !== null)
     {
@@ -80,7 +80,7 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
     }
   }
 
-  final private function limparCga(?string $cga)
+  private function limparCga(?string $cga)
   {
     if($cga !== null) 
     {
