@@ -15,7 +15,7 @@ final class LerArquivosTextoSalvador extends LerArquivosTextoAbstrata
   {
     try
     {
-        parent::processarArquivos();
+        return parent::processarArquivo();
       
     } catch (Exception $arquivoNaoAbriException)
     {
@@ -23,10 +23,4 @@ final class LerArquivosTextoSalvador extends LerArquivosTextoAbstrata
       
     }
   }
-
-  final public function criaPadraoSieg(array $dadosProcessados): array
-  {
-    return parent::criarPadraoSieg($dadosProcessados);
-  }
-  
 }

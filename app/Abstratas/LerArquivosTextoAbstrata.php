@@ -17,21 +17,26 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
   final public function processarArquivo(): array
   {
     $this->arquivoAberto= fopen($this->arquivoTexto, 'r');
-
-    if ($this->arquivoAberto)
+    
+    if (is_resource($this->arquivoAberto) === true)
     {
-      $linha= ''; $cnpjECga= [];
+      $linha= ''; $cnpjECga= []; $cnpj= null; $cga= null;
       
       while(!feof($this->arquivoAberto))
       {
          $linha= fgets($this->arquivoAberto);
          
-         $cnpjECga[]= $this->extrairCNPJOuCGA($linha, 'cnpj');
-         $cnpjECga[]= $this->extrairCNPJOuCGA($linha, 'cga');
+         $cnpj= $this->removerPontosCnpj($this->extrairCNPJOuCGA($linha, 'cnpj'));
+         $cga= $this->limparCga($this->extrairCNPJOuCGA($linha, 'cga'));
+
+         if($cnpj !== null && $cga !== null)
+         {
+           $cnpjECga[]= $cnpj . '|' . $cga;
+         }
          
       }
       
-       unset($linha);
+       unset($linha, $cnpj, $cga);
       
        fclose($this->arquivoAberto);
       
@@ -44,35 +49,8 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
     }
   }
 
-  final public function criarPadraoSieg (array $dadosProcessados): array
-  {
-    $dadosFormatados=[];
-    
-    foreach($dadosProcessados as $cnpjCga)
-    {
-      $quantidadeCaracteres= strlen($cnpjCga);
 
-      switch($quantidadeCaracteres)
-      {
-        case $quantidadeCaracteres === 18:
-        $dadosFormatados[]= preg_replace('/[\.]+/', ',', $cnpjCga);
-        break;
-        
-        case $quantidadeCaracteres === 14:
-        $dadosFormatados[]= preg_replace('/[\.\/-]+/', '', $cnpjCga);
-        break;
-        
-      }
-      
-    }
-
-    unset($dadosProcessados, $cnpjCga, $quantidadeCaracteres);
-    
-    return $dadosFormatados;
-    
-  }
-
-  final private function extrairCNPJOuCGA(string $linha, string $dado): mixed
+  private function extrairCNPJOuCGA(string $linha, string $dado)
    {
      
     switch(strtolower($dado))
@@ -88,7 +66,26 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
 
      unset($dado, $linha);
      
-     return $matches === [] ?  : $matches[0];
+     if($matches !== [])
+     {
+       return $matches[0];
+     }
+  }
+
+  private function removerPontosCnpj(?string $cnpj)
+  {
+    if($cnpj !== null)
+    {
+      return preg_replace('/[\.]+/', ',', $cnpj);
+    }
+  }
+
+  private function limparCga(?string $cga)
+  {
+    if($cga !== null) 
+    {
+      return preg_replace('/[\.\/-]+/', '', $cga);
+    }
   }
   
 }
