@@ -10,13 +10,15 @@
         <form action='/salvador' method='post' enctype='multipart/form-data' id='uploadfile'>
         @csrf
 
+           <label for='arquivosalvador'> Converta seu arquivo texto de Salvador </label> <br /> <br />
+
            <input name='arquivosalvador' type='file' id='arquivosalvador' /> <br />
 
-@error('arquivosalvador') 
-   <span> {{ $message }} </span>
-
-@enderror
            <button type='submit' id='arquivotextobutton' >Converter Arquivo Salvador </button>
+
+@error('arquivosalvador') 
+           <span> {{ $message }} </span>
+@enderror
 
         </form>
 
