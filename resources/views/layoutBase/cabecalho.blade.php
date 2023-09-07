@@ -8,6 +8,4 @@
         <meta http-equiv='X-UA-Compatible' content='ie-edge' />
         <meta name='csrf_token' content='{{ csrf_token() }}' />
 
-        <link href='css/welcome.css' rel='stylesheet' type='text/css' />
-
     </head>
