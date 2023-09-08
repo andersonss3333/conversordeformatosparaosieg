@@ -3,21 +3,23 @@
     <body>
         <hr />
 
-        <h3> Conversor para o padrão de arquivos de texto para o Sitema Sieg</h3>
+        <h3 class='text-center'> Conversor para o padrão de importação do Sistema Sieg</h3>
 
         <hr />
 
         <form action='/salvador' method='post' enctype='multipart/form-data' id='uploadfile'>
         @csrf
 
-           <label for='arquivosalvador'> Converta seu arquivo texto de Salvador </label> <br /> <br />
+        <div class='mb-3'>
+           <label for='arquivosalvador' class='form-label'> Converta seu arquivo texto de Salvador </label>
+           <input name='arquivosalvador' type='file' id='arquivosalvador' class='form-control form-control-sm' aria-describedby='aviso' />
+           <div id='aviso' class='form-text'>Somente arquivo do tipo .txt </div>
+        </div>
 
-           <input name='arquivosalvador' type='file' id='arquivosalvador' /> <br />
-
-           <button type='submit' id='arquivotextobutton' >Converter Arquivo Salvador </button>
+           <button class='btn btn-sm' type='submit' id='arquivotextobutton' >Converter Arquivo </button>
 
 @error('arquivosalvador') 
-           <span> {{ $message }} </span>
+           <span class='text-danger'> {{ $message }} </span>
 @enderror
 
         </form>
