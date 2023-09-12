@@ -3,6 +3,7 @@
 namespace App\Abstratas;
 
 use App\Contratos\LerArquivosTextoInterface;
+use Exception;
 
 abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
 {
@@ -57,19 +58,12 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
     {
        case $dado === 'cga':
        preg_match('/([0-9]{3}\.)([0-9]{3}\/)([0-9]{3}-[0-9]{2})/', $linha, $matches);
-       break;
+       return $matches === [] ? : $matches[0];
       
        case $dado === 'cnpj':
        preg_match('/[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}/', $linha, $matches);
-       break;
+       return $matches === [] ? : $matches[0];
     }
-
-     unset($dado, $linha);
-     
-     if($matches !== [])
-     {
-       return $matches[0];
-     }
   }
 
   private function removerPontosCnpj(?string $cnpj)
