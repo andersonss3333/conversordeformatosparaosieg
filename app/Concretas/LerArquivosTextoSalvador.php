@@ -3,6 +3,7 @@
 namespace App\Concretas;
 
 use App\Abstratas\LerArquivosTextoAbstrata;
+use Exception;
 
 final class LerArquivosTextoSalvador extends LerArquivosTextoAbstrata
 {
