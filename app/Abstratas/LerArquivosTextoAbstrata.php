@@ -58,12 +58,19 @@ abstract class LerArquivosTextoAbstrata implements LerArquivosTextoInterface
     {
        case $dado === 'cga':
        preg_match('/([0-9]{3}\.)([0-9]{3}\/)([0-9]{3}-[0-9]{2})/', $linha, $matches);
-       return $matches === [] ? : $matches[0];
+       break;
       
        case $dado === 'cnpj':
        preg_match('/[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}/', $linha, $matches);
-       return $matches === [] ? : $matches[0];
+       break;
     }
+
+     unset($dado, $linha);
+     
+     if($matches !== [])
+     {
+       return $matches[0];
+     }
   }
 
   private function removerPontosCnpj(?string $cnpj)
