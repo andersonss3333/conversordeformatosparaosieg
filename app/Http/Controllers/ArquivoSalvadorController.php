@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use App\Concretas\LerArquivosTextoSalvador;
 use App\Concretas\CriarArquivoTexto;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 final class ArquivoSalvadorController extends Controller
 {
-    final public function index (): view
+    final public function index ()
     {
      return view('welcome');
     }
