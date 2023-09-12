@@ -3,6 +3,7 @@
 namespace App\Concretas;
 
 use App\Abstratas\CriarArquivoTextoAbstrata;
+use Exception;
 
 class CriarArquivoTexto extends CriarArquivoTextoAbstrata
 {
