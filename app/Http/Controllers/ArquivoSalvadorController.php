@@ -2,44 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Concretas\LerArquivosTextoSalvador;
 use App\Concretas\CriarArquivoTexto;
-use Illuminate\Support\Facades\Validator;
+use App\Concretas\LerArquivosTextoSalvador;
 use Exception;
+use Illuminate\Http\Request;
 
 final class ArquivoSalvadorController extends Controller
 {
-    final public function index ()
+    final public function index()
     {
-     return view('welcome');
+        return view('welcome');
     }
 
-   final public function tratarArquivoSalvador (Request $arquivoSalvador): void
-  {
-    $arquivoSalvador->validate(['arquivosalvador' => 'bail|required|file|max:5024|mimes:txt, csv'],  ['arquivosalvador.required' => 'Faltou anexar o arquivo', 'arquivosalvador.mimes' => 'Somente pernitida as extensoes: .txt e .csv', 'arquivosalvador.max' => 'Arquivo maior que o permitido', 'arquivosalvador.file' => 'Somente arquivo do tipo .txt']);
+   final public function tratarArquivoSalvador(Request $arquivoSalvador): void
+   {
+       $arquivoSalvador->validate(['arquivosalvador' => 'bail|required|file|max:5024|mimes:txt, csv'], ['arquivosalvador.required' => 'Faltou anexar o arquivo', 'arquivosalvador.mimes' => 'Somente pernitida as extensoes: .txt e .csv', 'arquivosalvador.max' => 'Arquivo maior que o permitido', 'arquivosalvador.file' => 'Somente arquivo do tipo .txt']);
 
-    if ($arquivoSalvador->file('arquivosalvador')->isValid())
-    {
-      $arquivoTextoSalvador= $arquivoSalvador->file('arquivosalvador');
+       if ($arquivoSalvador->file('arquivosalvador')->isValid()) {
+           $arquivoTextoSalvador = $arquivoSalvador->file('arquivosalvador');
 
-      unset($arquivoSalvador);
-      
-     $arquivoSSA= new LerArquivosTextoSalvador($arquivoTextoSalvador);
-     $dadosFiltrados= $arquivoSSA->processarArquivo();
-      
-     $novoArquivoTexto= new CriarArquivoTexto($dadosFiltrados, $arquivoTextoSalvador->getClientOriginalName());
+           unset($arquivoSalvador);
 
-     unset($arquivoTextoSalvador);
+           $arquivoSSA = new LerArquivosTextoSalvador($arquivoTextoSalvador);
+           $dadosFiltrados = $arquivoSSA->processarArquivo();
 
-     $callback= $novoArquivoTexto->geraClosure();
-   
-     $novoArquivoTexto->criaArquivo($callback);
-      
-    } else
-    {
-      Throw new Exception ('Não foi possível subir o arquivo!');
-    }
-    
-  }
+           $novoArquivoTexto = new CriarArquivoTexto($dadosFiltrados, $arquivoTextoSalvador->getClientOriginalName());
+
+           unset($arquivoTextoSalvador);
+
+           $callback = $novoArquivoTexto->geraClosure();
+
+           $novoArquivoTexto->criaArquivo($callback);
+       } else {
+           throw new Exception('Não foi possível subir o arquivo!');
+       }
+   }
 }
