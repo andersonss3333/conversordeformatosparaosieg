@@ -65,7 +65,7 @@
             "./vendor/bin/phpstan analyse --level 5"
         ],
         "phpfixer": [
-            "./vendor/bin/php-cs-fixer fix"
+            "./vendor/bin/pint"
         ],
         "phpinsights": [
             "./vendor/bin/phpinsights"
