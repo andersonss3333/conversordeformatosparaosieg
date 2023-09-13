@@ -18,4 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/salvador', [ArquivoSalvadorController::class, 'tratarArquivoSalvador'])->name('salvador');
+Route::post('/salvador', [ArquivoSalvadorController::class, 'tratarArquivoSalvador'])
+  ->name('salvador');
