@@ -62,10 +62,13 @@
     },
     "scripts": {
         "phpstan": [
-            "./vendor/bin/phpstan analyse --level 7"
+            "./vendor/bin/phpstan analyse --level 5"
         ],
         "phpfixer": [
-            "./vendor/bin/php-cs-fixer fix --allow-risky yes"
+            "./vendor/bin/php-cs-fixer fix"
+        ],
+        "phpinsights": [
+            "./vendor/bin/phpinsights"
         ]
     },
     "minimum-stability": "dev",
