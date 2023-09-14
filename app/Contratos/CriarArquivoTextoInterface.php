@@ -4,6 +4,5 @@ namespace App\Contratos;
 
 interface CriarArquivoTextoInterface
 {
-  public function criarArquivo($closure);
-  
+    public function criarArquivo($closure);
 }
