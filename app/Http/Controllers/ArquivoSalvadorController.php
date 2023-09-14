@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 
 final class ArquivoSalvadorController extends Controller
 {
-    final public function index()
+    public function index()
     {
         return view('welcome');
     }
 
-   final public function tratarArquivoSalvador(Request $arquivoSalvador): void
+    public function tratarArquivoSalvador(Request $arquivoSalvador): void
    {
        $arquivoSalvador->validate(['arquivosalvador' => 'bail|required|file|max:5024|mimes:txt, csv'], ['arquivosalvador.required' => 'Faltou anexar o arquivo', 'arquivosalvador.mimes' => 'Somente pernitida as extensoes: .txt e .csv', 'arquivosalvador.max' => 'Arquivo maior que o permitido', 'arquivosalvador.file' => 'Somente arquivo do tipo .txt']);
 
