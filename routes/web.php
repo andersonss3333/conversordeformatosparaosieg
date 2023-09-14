@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArquivoSalvadorController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/salvador', [ArquivoSalvadorController::class, 'tratarArquivoSalvador'])->name('salvador');
+Route::post('/salvador', [ArquivoSalvadorController::class, 'tratarArquivoSalvador'])
+  ->name('salvador');

@@ -44,16 +44,16 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-$app = require_once (__DIR__ . '/../bootstrap/app.php');
+$app = require_once __DIR__.'/../bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 
 unset($app);
 
-$request= Request::capture();
+$request = Request::capture();
 
 $response = $kernel->handle(
-   $request
+    $request
 )->send();
 
 $kernel->terminate($request, $response);
