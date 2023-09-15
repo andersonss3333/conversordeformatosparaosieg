@@ -12,7 +12,7 @@ class CriarArquivoTexto extends CriarArquivoTextoAbstrata
         parent::__construct($dados, $nomeArquivo);
     }
 
-    final public function criaArquivo($closure)
+    final public function criaArquivo(callable $closure)
     {
         try {
             parent::criarArquivo($closure);
