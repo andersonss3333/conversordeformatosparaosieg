@@ -12,7 +12,7 @@ final class LerArquivosTextoSalvador extends LerArquivosTextoAbstrata
         parent::__construct($arquivo);
     }
 
-    final public function processarArquivos(): array
+    public function processarArquivos(): array
     {
         try {
             return parent::processarArquivo();
